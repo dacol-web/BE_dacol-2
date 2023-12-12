@@ -2,22 +2,25 @@ package src
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/Hy-Iam-Noval/dacol-2/src/ctrl"
 	"github.com/Hy-Iam-Noval/dacol-2/src/helpers"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
+	"github.com/joho/godotenv"
 )
 
 type App = *fiber.App
 
 func Route() App {
 	r := fiber.New()
+	godotenv.Load()
 
 	// config
 	r.Use(ctrl.Acceptable, cors.New(cors.Config{
-		AllowOrigins: "http://localhost:3000",
+		AllowOrigins: os.Getenv("FE_BASE"),
 		AllowHeaders: "Content-Type, user",
 		AllowMethods: "GET, POST, DELETE",
 	}))

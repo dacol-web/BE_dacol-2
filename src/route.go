@@ -16,7 +16,9 @@ type App = *fiber.App
 
 func Route() App {
 	r := fiber.New()
-	godotenv.Load()
+	if err := godotenv.Load(); err != nil {
+		panic(err)
+	}
 
 	// config
 	r.Use(ctrl.Acceptable, cors.New(cors.Config{

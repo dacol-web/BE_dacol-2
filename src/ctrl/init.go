@@ -1,6 +1,8 @@
 package ctrl
 
 import (
+	"encoding/json"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -15,6 +17,13 @@ type (
 		Data T `json:"data"`
 	}
 )
+
+func ReadDataReq(c Ctx, store interface{}) {
+	req := new(DataReq[string])
+	IsError(c.BodyParser(req))
+
+	json.Unmarshal([]byte(req.Data), &store)
+}
 
 func Acceptable(c Ctx) error {
 	// accept json

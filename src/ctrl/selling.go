@@ -12,7 +12,7 @@ func AddSelling(c Ctx) error {
 	req := new(DB.Selling)
 
 	// get req
-	c.BodyParser(req)
+	IsError(c.BodyParser(req))
 
 	// add selling
 	DB.Create("selling", *req).Exec()

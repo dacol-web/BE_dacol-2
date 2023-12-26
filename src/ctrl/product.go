@@ -67,23 +67,24 @@ func validateProduct(req []DB.Product) map[int]map[string]string {
 }
 
 func AddProd(c Ctx) error {
-	req := []DB.Product{}
+	req := new([]DB.Product)
 	user := helpers.ParseTokenUser(c.Get(UserKey))
 
 	// get request
-	c.BodyParser(&req)
-	if len(req) == 0 {
+	IsError(c.BodyParser(req))
+
+	if len(*req) == 0 {
 		return nil
 	}
 
 	// validate
-	if err := validateProduct(req); err != nil {
+	if err := validateProduct(*req); err != nil {
 		return c.Status(helpers.Invalid).JSON(ErrRes(err))
 	}
 
 	// inserting data
 	dataInsert := ""
-	for _, i := range req {
+	for _, i := range *req {
 		jsonImg := DB.JSONImg{}
 		json.Unmarshal([]byte(i.Img), &jsonImg)
 

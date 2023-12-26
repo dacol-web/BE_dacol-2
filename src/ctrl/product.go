@@ -67,24 +67,24 @@ func validateProduct(req []DB.Product) map[int]map[string]string {
 }
 
 func AddProd(c Ctx) error {
-	req := new([]DB.Product)
+	req := new(DataReq[[]DB.Product])
 	user := helpers.ParseTokenUser(c.Get(UserKey))
 
 	// get request
-	IsError(c.BodyParser(req))
+	IsError(c.BodyParser(&req))
 
-	if len(*req) == 0 {
+	if len(req.Data) == 0 {
 		return nil
 	}
 
 	// validate
-	if err := validateProduct(*req); err != nil {
+	if err := validateProduct(req.Data); err != nil {
 		return c.Status(helpers.Invalid).JSON(ErrRes(err))
 	}
 
 	// inserting data
 	dataInsert := ""
-	for _, i := range *req {
+	for _, i := range req.Data {
 		jsonImg := DB.JSONImg{}
 		json.Unmarshal([]byte(i.Img), &jsonImg)
 
@@ -121,19 +121,19 @@ func DeleteProd(c Ctx) error {
 }
 
 func UpdateProd(c Ctx) error {
-	req := new([]DB.Product)
+	req := new(DataReq[[]DB.Product])
 
 	IsError(c.BodyParser(req))
-	if len(*req) == 0 {
+	if len(req.Data) == 0 {
 		return nil
 	}
 
-	if err := validateProduct(*req); err != nil {
+	if err := validateProduct(req.Data); err != nil {
 		return c.Status(helpers.Invalid).JSON(err)
 	}
 
 	// update
-	for _, i := range *req {
+	for _, i := range req.Data {
 		DB.Query(
 			fmt.Sprintf(`
 				UPDATE product 

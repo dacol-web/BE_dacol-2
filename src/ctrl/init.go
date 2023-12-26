@@ -10,6 +10,10 @@ const (
 
 type (
 	Ctx = *fiber.Ctx
+
+	DataReq[T interface{}] struct {
+		Data T `json:"data"`
+	}
 )
 
 func Acceptable(c Ctx) error {

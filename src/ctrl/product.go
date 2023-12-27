@@ -71,7 +71,7 @@ func AddProd(c Ctx) error {
 	user := helpers.ParseTokenUser(c.Get(UserKey))
 
 	// get request
-	ReadDataReq(c, &req)
+	IsError(c.BodyParser(&req))
 
 	if len(req) == 0 {
 		return nil
@@ -123,7 +123,7 @@ func DeleteProd(c Ctx) error {
 func UpdateProd(c Ctx) error {
 	req := []DB.Product{}
 
-	ReadDataReq(c, &req)
+	IsError(c.BodyParser(&req))
 	if len(req) == 0 {
 		return nil
 	}

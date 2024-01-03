@@ -18,7 +18,7 @@ func Route() App {
 	// config
 	r.Use(ctrl.Acceptable, cors.New(cors.Config{
 		AllowOrigins: "fedacol2-production.up.railway.app",
-		AllowHeaders: "Content-Type, user",
+		AllowHeaders: "Origin, Content-Type, user, Accept",
 		AllowMethods: "GET, POST, DELETE",
 	}))
 

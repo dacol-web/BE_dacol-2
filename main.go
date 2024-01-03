@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/Hy-Iam-Noval/dacol-2/src"
+	"github.com/Hy-Iam-Noval/dacol-2/src/ctrl"
 )
 
 func main() {
@@ -13,5 +14,5 @@ func main() {
 	}
 	r := src.Route()
 
-	r.Listen(":" + port)
+	ctrl.IsError(r.Listen(":" + port))
 }

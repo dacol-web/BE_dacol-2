@@ -5,7 +5,7 @@ type (
 		Id        uint   `json:"id"`
 		Email     string `json:"email" validate:"required,email,unique"`
 		Password  string `json:"password" validate:"required,min=8,eqfield=Password2"`
-		Password2 string
+		Password2 string `json:"password2"`
 	}
 
 	JSONImg struct {

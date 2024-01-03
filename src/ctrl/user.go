@@ -22,7 +22,7 @@ func Login(c Ctx) error {
 		Single().
 		Scan(&user.Id, &user.Email, &user.Password)
 
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil || user.Email == "" {
 		return c.
 			Status(helpers.UnAuth).
 			JSON(ErrRes("Email or Password wrong"))
@@ -46,7 +46,7 @@ func Register(c Ctx) error {
 	}
 
 	DB.
-		Create("'user'", DB.User{Email: req.Email, Password: string(passCrypt)}).
+		Create("user", DB.User{Email: req.Email, Password: string(passCrypt)}).
 		Exec()
 
 	return nil

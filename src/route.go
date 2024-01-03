@@ -16,9 +16,8 @@ func Route() App {
 	r := fiber.New()
 
 	// config
-	r.Use(ctrl.Acceptable, cors.New(cors.Config{
+	r.Use(cors.New(cors.Config{
 		AllowOrigins: "fedacol2-production.up.railway.app",
-		AllowHeaders: "Origin, Content-Type, user, Accept",
 		AllowMethods: "GET, POST, DELETE",
 	}))
 

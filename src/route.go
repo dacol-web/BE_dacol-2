@@ -8,16 +8,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
-	"github.com/joho/godotenv"
+	_ "github.com/joho/godotenv"
 )
 
 type App = *fiber.App
 
 func Route() App {
 	r := fiber.New()
-	if err := godotenv.Load(); err != nil {
-		panic(err)
-	}
 
 	// config
 	r.Use(ctrl.Acceptable, cors.New(cors.Config{

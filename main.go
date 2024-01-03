@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/Hy-Iam-Noval/dacol-2/src"
+	_ "github.com/joho/godotenv"
 )
 
 func main() {

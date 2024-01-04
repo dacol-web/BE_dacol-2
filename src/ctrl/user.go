@@ -12,10 +12,10 @@ import (
 )
 
 func Login(c Ctx) error {
-	req := new(DB.User)
-	user := new(DB.User)
+	req := DB.User{}
+	user := DB.User{}
 
-	IsError(c.BodyParser(req))
+	IsError(c.BodyParser(&req))
 
 	DB.
 		Select("user", "*", fmt.Sprintf(`email = "%s"`, req.Email)).
@@ -28,15 +28,15 @@ func Login(c Ctx) error {
 			JSON(ErrRes("Email or Password wrong"))
 	}
 
-	return c.SendString(helpers.GenerateToken(*user))
+	return c.SendString(helpers.GenerateToken(user))
 }
 
 func Register(c Ctx) error {
-	req := new(DB.User)
+	req := DB.User{}
 
-	IsError(c.BodyParser(req))
+	IsError(c.BodyParser(&req))
 
-	if err := validation.IsValid(*req); err != nil {
+	if err := validation.IsValid(req); err != nil {
 		return c.Status(helpers.Invalid).JSON(err)
 	}
 

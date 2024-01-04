@@ -27,8 +27,8 @@ func ReadDataReq(c Ctx, store interface{}) {
 
 func Acceptable(c Ctx) error {
 	// accept json
-	c.Accepts("application/json")
-	c.Accepts("multipart/form-data")
+	c.Set("Contect-Type", "application/json")
+	c.Set("Contect-Type", "multipart/form-data")
 
 	return c.Next()
 }

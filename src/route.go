@@ -16,17 +16,18 @@ func Route() App {
 	r := fiber.New()
 
 	// config
+
+	r.Static("/public", "./public")
+	r.Use(filesystem.New(filesystem.Config{
+		Root: http.Dir("./public"),
+	}))
+
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: "fedacol2-production.up.railway.app",
 		AllowHeaders: "Origin, Content-Type, Accept, user",
 		AllowMethods: "GET, POST, DELETE",
 	}))
 	r.Use(ctrl.Acceptable)
-
-	r.Static("/public", "./public")
-	r.Use(filesystem.New(filesystem.Config{
-		Root: http.Dir("./public"),
-	}))
 
 	// route
 	r.Post("/login", ctrl.Login)
